@@ -1,6 +1,7 @@
 # Repo-specific GitIgnore ----------------------------------------------------------------------------------------------
 train_batch*.jpg
 test_batch*.jpg
+results*.png
 
 
 pycocotools/*
