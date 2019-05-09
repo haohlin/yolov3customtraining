@@ -36,7 +36,6 @@ def test(
             model = nn.DataParallel(model)
     else:
         device = next(model.parameters()).device  # get model device
-
     # Configure run
     data_cfg = parse_data_cfg(data_cfg)
     nc = int(data_cfg['classes'])  # number of classes
@@ -152,7 +151,9 @@ def test(
 
     # Print results per class
     if nc > 1 and len(stats):
+        mAP_per_class = {}
         for i, c in enumerate(ap_class):
+            mAP_per_class[names[c]] = ap[i]
             print(pf % (names[c], seen, nt[c], p[i], r[i], ap[i], f1[i]))
 
     # Save JSON
@@ -176,7 +177,7 @@ def test(
         map = cocoEval.stats[1]  # update mAP to pycocotools mAP
 
     # Return results
-    return mp, mr, map, mf1, loss / len(dataloader)
+    return mp, mr, map, mf1, loss / len(dataloader), str(mAP_per_class)
 
 
 if __name__ == '__main__':

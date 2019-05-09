@@ -275,7 +275,7 @@ def compute_loss(p, targets, model):  # predictions, targets, model
             pi = pi0[b, a, gj, gi]  # predictions closest to anchors
             tconf[b, a, gj, gi] = 1  # conf
             # pi[..., 2:4] = torch.sigmoid(pi[..., 2:4])  # wh power loss (uncomment)
-
+            #print('-------------------torch.sigmoid(pi[..., 0:2]), txy[i], shape', torch.sigmoid(pi[..., 0:2]), txy[i], torch.sigmoid(pi[..., 0:2]).shape, txy[i].shape)
             lxy += (k * h['xy']) * MSE(torch.sigmoid(pi[..., 0:2]), txy[i])  # xy loss
             lwh += (k * h['wh']) * MSE(pi[..., 2:4], twh[i])  # wh yolo loss
             lcls += (k * h['cls']) * CE(pi[..., 5:], tcls[i])  # class_conf loss

@@ -1,0 +1,4 @@
+classes=5
+train=data/Train/MavicTrain.txt
+valid=data/Train/MavicTrain.txt
+names=data/thesis_train.names

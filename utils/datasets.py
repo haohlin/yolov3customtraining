@@ -17,7 +17,7 @@ from utils.utils import xyxy2xywh
 class LoadImages:  # for inference
     def __init__(self, path, img_size=416):
         self.height = img_size
-        img_formats = ['.jpg', '.jpeg', '.png', '.tif']
+        img_formats = ['.jpg', '.jpeg', '.png', '.tif', '.JPEG']
         vid_formats = ['.mov', '.avi', '.mp4']
 
         files = []
@@ -140,7 +140,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
         self.img_size = img_size
         self.augment = augment
         self.label_files = [
-            x.replace('images', 'labels').replace('.bmp', '.txt').replace('.jpg', '.txt').replace('.png', '.txt')
+            x.replace('Images', 'Labels').replace('.bmp', '.txt').replace('.jpg', '.txt').replace('.png', '.txt')
             for x in self.img_files]
 
         # Rectangular Training  https://github.com/ultralytics/yolov3/issues/232

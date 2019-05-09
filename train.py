@@ -17,7 +17,7 @@ hyp = {'xy': 0.5,  # xy loss gain
        'cls': 0.0625,  # cls loss gain
        'conf': 4,  # conf loss gain
        'iou_t': 0.1,  # iou target-anchor training threshold
-       'lr0': 0.001,  # initial learning rate
+       'lr0': 0.0001,  # initial learning rate
        'lrf': -5.,  # final learning rate = lr0 * (10 ** lrf)
        'momentum': 0.9,  # SGD momentum
        'weight_decay': 0.0005,  # optimizer weight decay
@@ -225,7 +225,7 @@ def train(
 
         # Write epoch results
         with open('results.txt', 'a') as file:
-            file.write(s + '%11.3g' * 5 % results + '\n')  # P, R, mAP, F1, test_loss
+            file.write(s + '%11.3g' * 5 % results[:5] + results[5] + '\n')  # P, R, mAP, F1, test_loss
 
         # Update best loss
         test_loss = results[4]
@@ -250,8 +250,8 @@ def train(
                 torch.save(chkpt, best)
 
             # Save backup every 10 epochs (optional)
-            if epoch > 0 and epoch % 10 == 0:
-                torch.save(chkpt, weights + 'backup%g.pt' % epoch)
+            #if epoch > 0 and epoch % 10 == 0:
+            #    torch.save(chkpt, weights + 'backup%g.pt' % epoch)
 
             # Delete checkpoint
             del chkpt
@@ -276,8 +276,8 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', type=int, default=273, help='number of epochs')
     parser.add_argument('--batch-size', type=int, default=16, help='size of each image batch')
     parser.add_argument('--accumulate', type=int, default=1, help='accumulate gradient x batches before optimizing')
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp.cfg', help='cfg file path')
-    parser.add_argument('--data-cfg', type=str, default='data/coco.data', help='coco.data file path')
+    parser.add_argument('--cfg', type=str, default='cfg/yolo_trainmavic.cfg', help='cfg file path')
+    parser.add_argument('--data-cfg', type=str, default='data/coco_mavic.data', help='coco.data file path')
     parser.add_argument('--multi-scale', action='store_true', help='random image sizes per batch 320 - 608')
     parser.add_argument('--img-size', type=int, default=416, help='inference size (pixels)')
     parser.add_argument('--resume', action='store_true', help='resume training flag')
