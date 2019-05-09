@@ -225,7 +225,7 @@ def train(
 
         # Write epoch results
         with open('results.txt', 'a') as file:
-            file.write(s + '%11.3g' * 5 % results[:5] + results[5] + '\n')  # P, R, mAP, F1, test_loss
+            file.write(s + '%11.3g' * 5 % results[:5] + '  ' +results[5] + '\n')  # P, R, mAP, F1, test_loss
 
         # Update best loss
         test_loss = results[4]
@@ -255,6 +255,7 @@ def train(
 
             # Delete checkpoint
             del chkpt
+        plot_results()
 
     dt = (time.time() - t0) / 3600
     print('%g epochs completed in %.3f hours.' % (epoch - start_epoch, dt))
@@ -297,7 +298,6 @@ if __name__ == '__main__':
     if opt.evolve:
         opt.notest = True  # save time by only testing final epoch
         opt.nosave = True  # do not save checkpoints
-
     # Train
     results = train(
         opt.cfg,
@@ -310,6 +310,7 @@ if __name__ == '__main__':
         accumulate=opt.accumulate,
         multi_scale=opt.multi_scale,
     )
+    plot_results()
 
     # Evolve hyperparameters (optional)
     if opt.evolve:
