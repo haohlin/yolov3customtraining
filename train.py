@@ -310,7 +310,6 @@ if __name__ == '__main__':
         accumulate=opt.accumulate,
         multi_scale=opt.multi_scale,
     )
-    plot_results()
 
     # Evolve hyperparameters (optional)
     if opt.evolve:
