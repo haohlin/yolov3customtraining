@@ -255,7 +255,8 @@ def train(
 
             # Delete checkpoint
             del chkpt
-        plot_results()
+        if epoch % 2 ==0:
+            plot_results()
 
     dt = (time.time() - t0) / 3600
     print('%g epochs completed in %.3f hours.' % (epoch - start_epoch, dt))
