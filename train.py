@@ -255,7 +255,7 @@ def train(
 
             # Delete checkpoint
             del chkpt
-        if epoch % 2 ==0:
+        if (epoch+1) % 2 ==0:
             plot_results()
 
     dt = (time.time() - t0) / 3600
