@@ -53,6 +53,7 @@ def train(
     weights = 'weights' + os.sep
     latest = weights + 'latest.pt'
     best = weights + 'best.pt'
+    best_map = weights + 'best_bird_map.pt'
     device = torch_utils.select_device()
 
     if multi_scale:
@@ -75,6 +76,7 @@ def train(
     cutoff = -1  # backbone reaches to cutoff layer
     start_epoch = 0
     best_loss = float('inf')
+    best_bird_map = float('inf')
     nf = int(model.module_defs[model.yolo_layers[0] - 1]['filters'])  # yolo layer size (i.e. 255)
     if resume:  # Load previously saved model
         if transfer:  # Transfer learning
@@ -92,6 +94,7 @@ def train(
         if chkpt['optimizer'] is not None:
             optimizer.load_state_dict(chkpt['optimizer'])
             best_loss = chkpt['best_loss']
+            best_bird_map = chkpt['best_bird_map']
         del chkpt
 
     else:  # Initialize model with backbone (optional)
@@ -226,6 +229,10 @@ def train(
         # Write epoch results
         with open('results.txt', 'a') as file:
             file.write(s + '%11.3g' * 5 % results[:5] + '  ' +results[5] + '\n')  # P, R, mAP, F1, test_loss
+        
+        bird_map = results[5]['Bird']
+        if bird_map < best_bird_map:
+            best_bird_map = bird_map
 
         # Update best loss
         test_loss = results[4]
@@ -238,6 +245,7 @@ def train(
             # Create checkpoint
             chkpt = {'epoch': epoch,
                      'best_loss': best_loss,
+                     'best_bird_map': best_bird_map,
                      'model': model.module.state_dict() if type(
                          model) is nn.parallel.DistributedDataParallel else model.state_dict(),
                      'optimizer': optimizer.state_dict()}
@@ -248,6 +256,9 @@ def train(
             # Save best checkpoint
             if best_loss == test_loss:
                 torch.save(chkpt, best)
+
+            if best_bird_map == bird_map:
+                torch.save(chkpt, best_map)
 
             # Save backup every 10 epochs (optional)
             if epoch > 0 and epoch % 10 == 0:
