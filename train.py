@@ -94,7 +94,7 @@ def train(
         if chkpt['optimizer'] is not None:
             optimizer.load_state_dict(chkpt['optimizer'])
             best_loss = chkpt['best_loss']
-            best_bird_map = chkpt['best_bird_map']
+            #best_bird_map = chkpt['best_bird_map']
         del chkpt
 
     else:  # Initialize model with backbone (optional)
