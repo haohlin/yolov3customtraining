@@ -119,13 +119,14 @@ def detect(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3-spp.cfg', help='cfg file path')
-    parser.add_argument('--data-cfg', type=str, default='data/coco.data', help='coco.data file path')
-    parser.add_argument('--weights', type=str, default='weights/yolov3-spp.weights', help='path to weights file')
+    parser.add_argument('--cfg', type=str, default='cfg/yolo_trainmavic.cfg', help='cfg file path')
+    parser.add_argument('--data-cfg', type=str, default='data/coco_mavic.data', help='coco.data file path')
+    parser.add_argument('--weights', type=str, default='weights/best.pt', help='path to weights file')
     parser.add_argument('--images', type=str, default='data/samples', help='path to images')
     parser.add_argument('--img-size', type=int, default=416, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.5, help='object confidence threshold')
     parser.add_argument('--nms-thres', type=float, default=0.5, help='iou threshold for non-maximum suppression')
+    parser.add_argument('--webcam', action='store_true', help='use webcam for detection')
     opt = parser.parse_args()
     print(opt)
 
@@ -137,5 +138,6 @@ if __name__ == '__main__':
             images=opt.images,
             img_size=opt.img_size,
             conf_thres=opt.conf_thres,
-            nms_thres=opt.nms_thres
+            nms_thres=opt.nms_thres,
+            webcam = opt.webcam
         )

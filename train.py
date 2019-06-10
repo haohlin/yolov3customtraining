@@ -17,8 +17,8 @@ hyp = {'xy': 0.5,  # xy loss gain
        'cls': 0.0625,  # cls loss gain
        'conf': 4,  # conf loss gain
        'iou_t': 0.1,  # iou target-anchor training threshold
-       'lr0': 0.0001,  # initial learning rate
-       'lrf': -2.,  # final learning rate = lr0 * (10 ** lrf)
+       'lr0': 0.0002,  # initial learning rate
+       'lrf': -5.,  # final learning rate = lr0 * (10 ** lrf)
        'momentum': 0.9,  # SGD momentum
        'weight_decay': 0.0005,  # optimizer weight decay
        }
@@ -214,7 +214,7 @@ def train(
 
             # Multi-Scale training (320 - 608 pixels) every 10 batches
             if multi_scale and (i + 1) % 10 == 0:
-                dataset.img_size = random.choice(range(10, 20)) * 32
+                dataset.img_size = random.choice(range(10, 19)) * 32
                 print('multi_scale img_size = %g' % dataset.img_size)
 
         # Calculate mAP (always test final epoch, skip first 5 if opt.nosave)
@@ -250,8 +250,8 @@ def train(
                 torch.save(chkpt, best)
 
             # Save backup every 10 epochs (optional)
-            #if epoch > 0 and epoch % 10 == 0:
-            #    torch.save(chkpt, weights + 'backup%g.pt' % epoch)
+            if epoch > 0 and epoch % 10 == 0:
+                torch.save(chkpt, weights + 'backup%g.pt' % epoch)
 
             # Delete checkpoint
             del chkpt
