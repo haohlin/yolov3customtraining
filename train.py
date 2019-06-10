@@ -230,7 +230,7 @@ def train(
         with open('results.txt', 'a') as file:
             file.write(s + '%11.3g' * 5 % results[:5] + '  ' +results[5] + '\n')  # P, R, mAP, F1, test_loss
         
-        bird_map = results[5]['Bird']
+        bird_map = results[6]
         if bird_map < best_bird_map:
             best_bird_map = bird_map
 

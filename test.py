@@ -155,6 +155,7 @@ def test(
         for i, c in enumerate(ap_class):
             mAP_per_class[names[c]] = ap[i]
             print(pf % (names[c], seen, nt[c], p[i], r[i], ap[i], f1[i]))
+        bird_map = mAP_per_class['Bird']
 
     # Save JSON
     if save_json and map and len(jdict):
@@ -177,7 +178,7 @@ def test(
         map = cocoEval.stats[1]  # update mAP to pycocotools mAP
 
     # Return results
-    return mp, mr, map, mf1, loss / len(dataloader), str(mAP_per_class)
+    return mp, mr, map, mf1, loss / len(dataloader), str(mAP_per_class), bird_map
 
 
 if __name__ == '__main__':
