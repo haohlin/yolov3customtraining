@@ -17,7 +17,7 @@ hyp = {'xy': 0.5,  # xy loss gain
        'cls': 0.0625,  # cls loss gain
        'conf': 4,  # conf loss gain
        'iou_t': 0.1,  # iou target-anchor training threshold
-       'lr0': 0.0002,  # initial learning rate
+       'lr0': 0.0001,  # initial learning rate
        'lrf': -5.,  # final learning rate = lr0 * (10 ** lrf)
        'momentum': 0.9,  # SGD momentum
        'weight_decay': 0.0005,  # optimizer weight decay
