@@ -17,8 +17,8 @@ hyp = {'xy': 0.5,  # xy loss gain
        'cls': 0.0625,  # cls loss gain
        'conf': 4,  # conf loss gain
        'iou_t': 0.1,  # iou target-anchor training threshold
-       'lr0': 0.00005,  # initial learning rate
-       'lrf': -5.,  # final learning rate = lr0 * (10 ** lrf)
+       'lr0': 0.0004,  # initial learning rate
+       'lrf': -4.,  # final learning rate = lr0 * (10 ** lrf)
        'momentum': 0.9,  # SGD momentum
        'weight_decay': 0.0005,  # optimizer weight decay
        }
@@ -40,9 +40,9 @@ hyp = {'xy': 0.5,  # xy loss gain
 def train(
         cfg,
         data_cfg,
-        img_size=416,
+        img_size=608,
         resume=False,
-        epochs=273,  # 500200 batches at bs 64, dataset length 117263
+        epochs=200,  # 500200 batches at bs 64, dataset length 117263
         batch_size=16,
         accumulate=1,
         multi_scale=False,
@@ -286,13 +286,13 @@ def print_mutation(hyp, results):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epochs', type=int, default=273, help='number of epochs')
+    parser.add_argument('--epochs', type=int, default=200, help='number of epochs')
     parser.add_argument('--batch-size', type=int, default=16, help='size of each image batch')
     parser.add_argument('--accumulate', type=int, default=1, help='accumulate gradient x batches before optimizing')
     parser.add_argument('--cfg', type=str, default='cfg/yolo_trainmavic.cfg', help='cfg file path')
     parser.add_argument('--data-cfg', type=str, default='data/coco_mavic.data', help='coco.data file path')
     parser.add_argument('--multi-scale', action='store_true', help='random image sizes per batch 320 - 608')
-    parser.add_argument('--img-size', type=int, default=416, help='inference size (pixels)')
+    parser.add_argument('--img-size', type=int, default=608, help='inference size (pixels)')
     parser.add_argument('--resume', action='store_true', help='resume training flag')
     parser.add_argument('--transfer', action='store_true', help='transfer learning flag')
     parser.add_argument('--num-workers', type=int, default=4, help='number of Pytorch DataLoader workers')
