@@ -551,7 +551,7 @@ def plot_results(start=1, stop=0):  # from utils.utils import *; plot_results()
         n = results.shape[1]  # number of rows
         x = range(start, min(stop, n) if stop else n)
         for i in range(10):
-            ax[i].plot(x, results[i, x], marker='.', label=f.replace('.txt', ''))
+            ax[i].plot(x, results[i, x], label=f.replace('.txt', ''))
             ax[i].set_title(s[i])
     fig.tight_layout()
     ax[4].legend()
